@@ -1,6 +1,6 @@
 {
   "name": "nx-starter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple MVC starter template with node, express, sequelize and socket.io",
   "main": "server.js",
   "scripts": {
@@ -10,7 +10,6 @@
   "bin": {
     "ne-starter": "index.js"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/khokonm/node-express-starter-2.0.git"
