@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const [, , projectName] = process.argv;
 
 if (!projectName) {
-    console.error("Error: Please provide a project name.\nUsage: npx nd-starter my-project-name");
+    console.error("Error: Please provide a project name.\nUsage: npx ne-starter my-project-name");
     process.exit(1);
 }
 
