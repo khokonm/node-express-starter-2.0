@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Playground - Node Express Starter 2.0</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #64748b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --code-bg: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .playground-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .playground-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .playground-header p {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .endpoint-section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .endpoint-header {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .method {
+            background: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .endpoint-url {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+        }
+
+        .endpoint-content {
+            padding: 1.5rem;
+        }
+
+        .request-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .response-section {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .response-section.visible {
+            display: block;
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status.success {
+            background: var(--success);
+            color: white;
+        }
+
+        .status.error {
+            background: var(--error);
+            color: white;
+        }
+
+        .response-body {
+            background: var(--code-bg);
+            color: var(--light);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Fira Code', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="playground-header">
+            <h1>API Playground</h1>
+            <p>Test the authentication endpoints directly in your browser</p>
+        </div>
+
+        <h2 style="text-align: center; color: var(--dark); font-size: 1.8rem; margin-bottom: 2rem; font-weight: 700;">Email/Password Based Authentication</h2>
+
+        <!-- Login Endpoint -->
+        <div class="endpoint-section">
+            <div class="endpoint-header">
+                <span class="method">POST</span>
+                <span class="endpoint-url">/api/auth/login-password</span>
+            </div>
+            <div class="endpoint-content">
+                <form class="request-form" id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label" for="login-email">Email</label>
+                        <input type="email" id="login-email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn">Send Request</button>
+                </form>
+                <div class="response-section" id="loginResponse">
+                    <div class="response-header">
+                        <span class="status">Status: <span class="status-code"></span></span>
+                    </div>
+                    <pre class="response-body"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Endpoint -->
+        <div class="endpoint-section">
+            <div class="endpoint-header">
+                <span class="method">POST</span>
+                <span class="endpoint-url">/api/auth/register-password</span>
+            </div>
+            <div class="endpoint-content">
+                <form class="request-form" id="registerForm">
+                    <div class="form-group">
+                        <label class="form-label" for="register-name">Full Name</label>
+                        <input type="text" id="register-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="register-email">Email</label>
+                        <input type="email" id="register-email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="register-password">Password</label>
+                        <input type="password" id="register-password" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="register-password-confirmation">Confirm Password</label>
+                        <input type="password" id="register-password-confirmation" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn">Send Request</button>
+                </form>
+                <div class="response-section" id="registerResponse">
+                    <div class="response-header">
+                        <span class="status">Status: <span class="status-code"></span></span>
+                    </div>
+                    <pre class="response-body"></pre>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; color: var(--dark); font-size: 1.8rem; margin-bottom: 2rem; font-weight: 700;">OTP Based Authentication</h2>
+        <!-- Request OTP Endpoint -->
+        <div class="endpoint-section">
+            <div class="endpoint-header">
+                <span class="method">POST</span>
+                <span class="endpoint-url">/api/auth/send_otp</span>
+            </div>
+            <div class="endpoint-content">
+                <form class="request-form" id="requestOtpForm">
+                    <div class="form-group">
+                        <label class="form-label" for="otp-email">Email</label>
+                        <input type="email" id="otp-email" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn">Send Request</button>
+                </form>
+                <div class="response-section" id="requestOtpResponse">
+                    <div class="response-header">
+                        <span class="status">Status: <span class="status-code"></span></span>
+                    </div>
+                    <pre class="response-body"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Verify OTP Endpoint -->
+        <div class="endpoint-section">
+            <div class="endpoint-header">
+                <span class="method">POST</span>
+                <span class="endpoint-url">/api/auth/login</span>
+            </div>
+            <div class="endpoint-content">
+                <form class="request-form" id="verifyOtpForm">
+                    <div class="form-group">
+                        <label class="form-label" for="verify-email">Email</label>
+                        <input type="email" id="verify-email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="otp-code">OTP Code</label>
+                        <input type="text" id="otp-otp" class="form-input" required pattern="[0-9]{6}" title="Please enter a 6-digit OTP code">
+                    </div>
+                    <button type="submit" class="btn">Send Request</button>
+                </form>
+                <div class="response-section" id="verifyOtpResponse">
+                    <div class="response-header">
+                        <span class="status">Status: <span class="status-code"></span></span>
+                    </div>
+                    <pre class="response-body"></pre>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; color: var(--dark); font-size: 1.8rem; margin-bottom: 2rem; font-weight: 700;">Password Reset API</h2>
+
+        <!-- Reset Password Endpoint -->
+        <div class="endpoint-section">
+            <div class="endpoint-header">
+                <span class="method">POST</span>
+                <span class="endpoint-url">/api/auth/send_otp</span>
+            </div>
+            <div class="endpoint-content">
+                <form class="request-form" id="resetPasswordForm">
+                    <div class="form-group">
+                        <label class="form-label" for="reset-email">Email</label>
+                        <input type="email" id="reset-email" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn">Send Request</button>
+                </form>
+                <div class="response-section" id="resetPasswordResponse">
+                    <div class="response-header">
+                        <span class="status">Status: <span class="status-code"></span></span>
+                    </div>
+                    <pre class="response-body"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reset Password with OTP Endpoint -->
+        <div class="endpoint-section">
+            <div class="endpoint-header">
+                <span class="method">POST</span>
+                <span class="endpoint-url">/api/auth/password-reset</span>
+            </div>
+            <div class="endpoint-content">
+                <form class="request-form" id="resetPasswordOtpForm">
+                    <div class="form-group">
+                        <label class="form-label" for="reset-email-otp">Email</label>
+                        <input type="email" id="reset-email-otp" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="reset-otp">OTP Code</label>
+                        <input type="text" id="reset-otp" class="form-input" required pattern="[0-9]{6}" title="Please enter a 6-digit OTP code">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="new-password">New Password</label>
+                        <input type="password" id="new-password" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="confirm-new-password">Confirm New Password</label>
+                        <input type="password" id="confirm-new-password" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn">Send Request</button>
+                </form>
+                <div class="response-section" id="resetPasswordOtpResponse">
+                    <div class="response-header">
+                        <span class="status">Status: <span class="status-code"></span></span>
+                    </div>
+                    <pre class="response-body"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.request-form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const endpoint = e.target.closest('.endpoint-section')
+                    .querySelector('.endpoint-url').textContent;
+                const responseSection = e.target.nextElementSibling;
+                const responseBody = responseSection.querySelector('.response-body');
+                const statusElement = responseSection.querySelector('.status');
+                const statusCode = responseSection.querySelector('.status-code');
+
+                let formData = {};
+                e.target.querySelectorAll('input').forEach(input => {
+                    formData[input.id.split('-')[1]] = input.value;
+                });
+
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+                    responseBody.textContent = JSON.stringify(data, null, 2);
+                    statusCode.textContent = response.status;
+                    statusElement.className = `status ${response.ok ? 'success' : 'error'}`;
+                    responseSection.classList.add('visible');
+                } catch (error) {
+                    responseBody.textContent = JSON.stringify({ error: error.message }, null, 2);
+                    statusCode.textContent = '500';
+                    statusElement.className = 'status error';
+                    responseSection.classList.add('visible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
