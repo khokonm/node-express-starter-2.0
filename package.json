@@ -1,5 +1,5 @@
 {
-  "name": "node-express-starter-2.0",
+  "name": "nx-starter",
   "version": "1.0.1",
   "description": "A simple MVC starter template with node, express, sequelize and socket.io",
   "main": "server.js",
