@@ -21,12 +21,23 @@ if (fs.existsSync(targetPath)) {
 // Copy template files
 fs.cpSync(__dirname, targetPath, { recursive: true });
 
-// Remove package-related files (to avoid conflicts)
-fs.unlinkSync(path.join(targetPath, "package.json"));
-fs.unlinkSync(path.join(targetPath, "index.js"));
+// Read the original package.json
+const packageJson = JSON.parse(fs.readFileSync(path.join(targetPath, "package.json"), "utf8"));
 
-// Initialize new npm package
-execSync("npm init -y", { cwd: targetPath, stdio: "inherit" });
+// Update package.json fields while preserving dependencies
+packageJson.name = projectName;
+packageJson.version = "1.0.0";
+packageJson.description = "A Node.js Express application created with ne-starter";
+delete packageJson.bin;
+
+// Write the modified package.json
+fs.writeFileSync(
+    path.join(targetPath, "package.json"),
+    JSON.stringify(packageJson, null, 2)
+);
+
+// Remove the CLI file as it's not needed in the new project
+fs.unlinkSync(path.join(targetPath, "index.js"));
 
 console.log(`✅ Project "${projectName}" created successfully!`);
 console.log(`👉 Next steps:\n  cd ${projectName}\n  npm install\n  npm start`);
