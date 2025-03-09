@@ -15,6 +15,13 @@ const Session = require('./utils/session.util');
 
 const app = express();
 
+// if want to print console logs to file
+// require('./utils/logger.util');
+
+// if want to host the app on cpanel
+// uncomment the line below and remove the module alias setup from the package.json file
+// require('./utils/cpanel.util');
+
 // app config
 app.use("/media", express.static("public"));
 app.use(cors({
