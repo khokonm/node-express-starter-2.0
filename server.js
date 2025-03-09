@@ -10,6 +10,7 @@ const routes = require("./routes");
 
 // app config
 const PORT = process.env.PORT || 8000;
+const BASE_PATH = process.env.BASE_PATH || ''; // set base path if project is hosted on path other than root
 
 // public folder
 app.use(express.static(path.join(__dirname, "public")));
@@ -25,7 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //   res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
 // });
 
-app.use(routes);
+app.use(BASE_PATH, routes);
 
 const syncConfig = {
     // logging: true,

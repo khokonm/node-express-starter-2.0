@@ -7,10 +7,6 @@ const ejs = require("ejs");
 const path = require("path");
 const cookieParser = require('cookie-parser')
 
-
-const dev = process.env.NODE_ENV !== 'production';
-
-
 const Session = require('./utils/session.util');
 
 const app = express();
