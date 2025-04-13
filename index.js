@@ -21,6 +21,12 @@ if (fs.existsSync(targetPath)) {
 // Copy template files
 fs.cpSync(__dirname, targetPath, { recursive: true });
 
+// Ensure .gitignore is copied (it might be skipped by default)
+const gitignorePath = path.join(__dirname, '.gitignore');
+if (fs.existsSync(gitignorePath)) {
+    fs.copyFileSync(gitignorePath, path.join(targetPath, '.gitignore'));
+}
+
 // Read the original package.json
 const packageJson = JSON.parse(fs.readFileSync(path.join(targetPath, "package.json"), "utf8"));
 
