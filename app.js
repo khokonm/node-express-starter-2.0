@@ -11,6 +11,8 @@ const Session = require('./utils/session.util');
 
 const app = express();
 
+const BASE_PATH = process.env.BASE_PATH || '';
+
 // if want to print console logs to file
 // require('./utils/logger.util');
 
@@ -19,7 +21,7 @@ const app = express();
 // require('./utils/cpanel.util');
 
 // app config
-app.use("/media", express.static("public"));
+app.use(BASE_PATH, express.static("public"));
 app.use(cors({
   origin: "http://localhost:5173",
   // origin: "*",

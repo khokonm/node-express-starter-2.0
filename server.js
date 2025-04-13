@@ -20,13 +20,13 @@ app.use(express.static(path.join(__dirname, "public")));
 // require("./services/event.service");
 // require("./events");
 
+app.use(BASE_PATH, routes);
+
 // if using react app
-// app.use(express.static(path.join(__dirname, "client/build")));
+// app.use(BASE_PATH, express.static(path.join(__dirname, "client/build")));
 // app.get("*", (req, res) => {
 //   res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
 // });
-
-app.use(BASE_PATH, routes);
 
 const syncConfig = {
     // logging: true,
@@ -50,5 +50,5 @@ db.connect
 
 server.listen(PORT, (err) => {
     if (err) throw err;
-    console.log(`Server ready on http://localhost:${PORT}`);
+    console.log(`Server ready on http://localhost:${PORT}${BASE_PATH}`);
 });
