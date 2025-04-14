@@ -7,7 +7,7 @@ const path = require("path");
 const [, , projectName] = process.argv;
 
 if (!projectName) {
-    console.error("Error: Please provide a project name.\nUsage: npx ne-starter my-project-name");
+    console.error("Error: Please provide a project name.\nUsage: npx nx-starter my-project-name");
     process.exit(1);
 }
 
@@ -33,7 +33,7 @@ const packageJson = JSON.parse(fs.readFileSync(path.join(targetPath, "package.js
 // Update package.json fields while preserving dependencies
 packageJson.name = projectName;
 packageJson.version = "1.0.0";
-packageJson.description = "A Node.js Express application created with ne-starter";
+packageJson.description = "A Node.js Express application created with nx-starter";
 delete packageJson.bin;
 
 // Write the modified package.json

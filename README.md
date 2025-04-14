@@ -27,7 +27,7 @@ You can get started with Node Express Starter 2.0 in two ways:
 ### Option 1: Using npx (Recommended)
 
 ```bash
-npx ne-starter my-project
+npx nx-starter my-project
 cd my-project
 ```
 

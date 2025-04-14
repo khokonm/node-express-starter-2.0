@@ -6,10 +6,18 @@ const formidable = require("express-formidable");
 const ejs = require("ejs");
 const path = require("path");
 const cookieParser = require('cookie-parser')
+const helmet = require('helmet');
 
 const Session = require('./utils/session.util');
+const securityMiddleware = require('./middleware/security.middleware');
 
 const app = express();
+
+// Apply security middleware
+app.use(securityMiddleware);
+
+// Apply helmet middleware for additional security
+app.use(helmet());
 
 const BASE_PATH = process.env.BASE_PATH || '';
 
