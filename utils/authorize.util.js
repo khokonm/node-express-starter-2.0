@@ -30,10 +30,22 @@ const authorize = async (req, res, email, authOn = "client") => {
 
         if (!SaveToken) return res.render("auth/login.html", { email, errors: ['something went wrong, please try again!'] })
 
-        if (authOn == "client") return res.json({
-            status: true,
-            message: authToken
-        });
+        if (authOn == "client") {
+            // Include user information in the response
+            const userData = {
+                user_id: User.user_id,
+                name: User.name,
+                email: User.email,
+                account_role: User.account_role,
+                account_status: User.account_status
+            };
+            
+            return res.json({
+                status: true,
+                message: authToken,
+                user: userData
+            });
+        }
 
 
         console.log("setting cookie")
